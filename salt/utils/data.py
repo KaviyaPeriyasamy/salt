@@ -767,8 +767,11 @@ def traverse_dict_and_list(data, key, default=None, delimiter=DEFAULT_TARGET_DEL
                     return default
         else:
             try:
+                for key, value in ptr.items():
+                    if not isinstance(key, str):
+                        ptr[str(key)] = ptr.pop(key)
                 ptr = ptr[each]
-            except (KeyError, TypeError):
+            except KeyError:
                 return default
     return ptr
 
